@@ -38,3 +38,7 @@ tmtagsHistory
 *.sublime-project
 *.sublime-workspace
 .bundle
+
+# Blender backup files #
+########################
+*.blend1
