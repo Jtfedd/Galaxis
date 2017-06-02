@@ -1,0 +1,31 @@
+//Cg
+
+//Shader colors the model based on alpha value and tint provided
+ 
+void vshader(float4 vtx_position    : POSITION,
+             float4 vtx_color       : COLOR,
+             float2 vtx_texcoord0   : TEXCOORD0,
+             out float2 l_texcoord0 : TEXCOORD0,
+             out float4 l_position  : POSITION,
+             out float4 l_color0    : COLOR0,
+	         uniform float4 texpad_tex4,
+             uniform float4x4 mat_modelproj)
+{
+  l_texcoord0 = vtx_position.xz * texpad_tex4.xy + texpad_tex4.xy;
+  l_position = mul(mat_modelproj, vtx_position);
+  l_color0 = vtx_color;
+}
+ 
+void fshader(in float2 l_texcoord0 : TEXCOORD0,
+             float4 l_color0       : COLOR0,
+             out float4 o_color    : COLOR,
+             sampler2D k_tex4      : TEXUNIT0,
+             in uniform float3 tint)
+{
+  float4 result = tex2D(k_tex4, float2(l_texcoord0));
+  float tintFact = (result[0] + result[1] + result[2]) / 3;
+  result[0] = (tint[0]+((1-tint[0])*tintFact))*tintFact;
+  result[1] = (tint[1]+((1-tint[1])*tintFact))*tintFact;
+  result[2] = (tint[2]+((1-tint[2])*tintFact))*tintFact;
+  o_color = result;
+}

@@ -1,0 +1,77 @@
+<CoordinateSystem> { Z-up } 
+<Material> Material {
+  <Scalar> diffr { 0 }
+  <Scalar> diffg { 0 }
+  <Scalar> diffb { 0 }
+  <Scalar> ambr { 0 }
+  <Scalar> ambg { 0 }
+  <Scalar> ambb { 0 }
+  <Scalar> emitr { 1.000000 }
+  <Scalar> emitg { 1.000000 }
+  <Scalar> emitb { 1.000000 }
+}
+
+<Texture> Texture {
+  "./tex/gridtex.png"
+  <Scalar> envtype { MODULATE }
+  <Scalar> minfilter { LINEAR_MIPMAP_LINEAR }
+  <Scalar> magfilter { LINEAR_MIPMAP_LINEAR }
+  <Scalar> wrap { REPEAT }
+  <Transform> {
+    <Translate> { -0.5 -0.5 -0.5 }
+    <Scale> { 15.0 15.0 1.0 }
+    <Translate> { 0.5 0.5 0.5 }
+  }
+}
+
+<Texture> Texture.001 {
+  "./tex/mask.png"
+  <Scalar> envtype { MODULATE }
+  <Scalar> minfilter { LINEAR_MIPMAP_LINEAR }
+  <Scalar> magfilter { LINEAR_MIPMAP_LINEAR }
+  <Scalar> wrap { REPEAT }
+}
+
+  <Group> Plane {
+    <Transform> {
+      <Matrix4> {
+        10.0 0.0 0.0 0.0 
+        0.0 10.0 0.0 0.0 
+        0.0 0.0 10.0 0.0 
+        0.0 0.0 0.0 1.0 
+      }
+    }
+    
+    <VertexPool> Plane {
+    
+      <Vertex> 0 {-10.000000 -10.000000 0.000000
+        <UV>  {
+          0.000000 0.000000 
+        }
+      }
+      <Vertex> 1 {10.000000 -10.000000 0.000000
+        <UV>  {
+          1.000000 0.000000 
+        }
+      }
+      <Vertex> 2 {10.000000 10.000000 0.000000
+        <UV>  {
+          1.000000 1.000000 
+        }
+      }
+      <Vertex> 3 {-10.000000 10.000000 0.000000
+        <UV>  {
+          0.000000 1.000000 
+        }
+      }}
+    
+    
+    <Polygon> {
+      <TRef> { Texture.001 }
+      <TRef> { Texture }
+      <MRef> { Material }
+      <Normal> {0.000000 0.000000 1.000000}
+      <RGBA> {1.000000 1.000000 1.000000 1}
+      <VertexRef> { 0 1 2 3 <Ref> { Plane }} 
+    }
+  }

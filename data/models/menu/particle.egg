@@ -1,0 +1,64 @@
+<CoordinateSystem> { Z-up } 
+<Material> Material.001 {
+  <Scalar> diffr { 0.640000 }
+  <Scalar> diffg { 0.640000 }
+  <Scalar> diffb { 0.640000 }
+  <Scalar> specr { 0.500000 }
+  <Scalar> specg { 0.500000 }
+  <Scalar> specb { 0.500000 }
+  <Scalar> shininess { 12.5 }
+  <Scalar> ambr { 1.000000 }
+  <Scalar> ambg { 1.000000 }
+  <Scalar> ambb { 1.000000 }
+  <Scalar> emitr { 0.000000 }
+  <Scalar> emitg { 0.000000 }
+  <Scalar> emitb { 0.000000 }
+}
+
+<Texture> Tex {
+  "./tex/particle.png"
+  <Scalar> envtype { MODULATE }
+  <Scalar> wrap { REPEAT }
+}
+
+  <Group> Plane {
+    <Transform> {
+      <Matrix4> {
+        7.549790126404332e-08 0.0 -1.0 0.0 
+        0.0 1.0 0.0 0.0 
+        3.0 0.0 2.2649371089755732e-07 0.0 
+        0.0 0.0 0.0 1.0 
+      }
+    }
+    
+    <VertexPool> Plane {
+    
+      <Vertex> 0 {15.000000 0.000000 1.000005
+        <UV>  {
+          0.000000 0.000000 
+        }
+      }
+      <Vertex> 1 {15.000000 0.000000 -0.999996
+        <UV>  {
+          0.999997 0.000000 
+        }
+      }
+      <Vertex> 2 {-15.000000 -0.000000 -1.000005
+        <UV>  {
+          1.000000 1.000000 
+        }
+      }
+      <Vertex> 3 {-15.000000 -0.000000 0.999996
+        <UV>  {
+          0.000003 1.000000 
+        }
+      }}
+    
+    
+    <Polygon> {
+      <TRef> { Tex }
+      <MRef> { Material.001 }
+      <Normal> {-0.000000 1.000000 -0.000000}
+      <VertexRef> { 0 1 2 3 <Ref> { Plane }} 
+    }
+  }

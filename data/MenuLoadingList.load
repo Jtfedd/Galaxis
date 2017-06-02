@@ -1,0 +1,12 @@
+image|data/images/white.png
+image|data/images/grey.png
+image|data/images/black.png
+model|data/models/menu/particle
+sfx|data/sounds/music/outro.wav
+music|data/sounds/music/Killers.wav
+shader|data/shaders/invert_threshold_r_blur.sha
+shader|data/shaders/gaussian_blur.sha
+shader|data/shaders/lens_flare.sha
+shader|data/shaders/tint.sha
+image|data/story/red.png
+image|data/story/blue.png
