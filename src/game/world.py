@@ -172,6 +172,7 @@ class World(DirectObject):
             for ship in self.ships:
                 if ship.team == self.game.playerTeam:
                     self.selectShip(ship)
+        self.selectedShips.rebuild()
 
     def clearSelection(self):
         while len(self.selectedShips) > 0:
