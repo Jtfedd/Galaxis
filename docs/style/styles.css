@@ -1,0 +1,68 @@
+@font-face { font-family: cooper-hewitt; src: url('cooper-hewitt.otf'); }
+
+body {
+    margin: 0;
+    background-color: #000;
+    overflow: hidden;
+    font-family: cooper-hewitt;
+    color: #fff;
+}
+
+.background-img {
+    width: 100%;
+    position: absolute;
+}
+
+.navbar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    background: linear-gradient(0deg, transparent, black);
+}
+
+.navbar-btn {
+    flex-grow: 1;
+    height: 50px;
+    line-height: 50px;
+    font-size: 20px;
+    text-align: center;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border: 1px solid transparent;
+    border-top: none;
+}
+.navbar-btn:hover {
+    border: 1px solid #999;
+    border-top: none;
+    cursor: default;
+}
+
+.navbar-btn.active {
+    border: 1px solid #fff;
+    border-top: none;
+}
+.navbar-btn.active:hover {
+    border: 1px solid #fff;
+    border-top: none;
+}
+
+.content {
+    z-index: 1;
+    position: absolute;
+    width: 1000px;
+    overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.3);
+    left: 50%;
+    margin-left: -500px;
+}
+
+.content-main {
+    background-color: transparent;
+}
+
+.title-main {
+    text-align: center;
+    font-size: 80px;
+    width: 100%;
+    padding-top: 20px;
+}
