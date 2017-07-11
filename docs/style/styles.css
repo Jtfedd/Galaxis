@@ -104,3 +104,83 @@ body {
     font-size: 80px;
     width: 100%;
 }
+
+.screenshot-panel {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.screenshot {
+    flex-basis: 0;
+    flex-grow: 1;
+    cursor: pointer;
+    min-width: 400px;
+    border: 1px solid transparent;
+}
+.screenshot:hover {
+    border: 1px solid white;
+    background-color: rgba(255, 255, 255, .1);
+}
+
+.screenshot-inner {
+    padding: 10px;
+}
+
+.screenshot-img {
+    width: 100%;
+    border: 1px solid grey;
+}
+
+.screenshot-title {
+    width: 100%;
+    text-align: center;
+    padding-top: 5px;
+}
+
+.screenshot-overlay {
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: black;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+
+.screenshot-icons {
+    transition: opacity .5s ease-in-out;
+    width: 100%;
+    height: 100%;
+}
+
+.screenshot-nav-icon {
+    transition: color .3s ease-in-out;
+    color: rgba(255, 255, 255, .4);
+    font-size: 40px;
+    position: absolute;
+}
+.screenshot-nav-icon:hover {
+    color: white;
+}
+
+.close-btn {
+    right: 15px;
+    top: 10px;
+}
+
+.left-arrow {
+    top: 50%;
+    margin-top: -25px;
+    font-size: 100px;
+    left: 30px;
+}
+
+.right-arrow {
+    top: 50%;
+    margin-top: -25px;
+    font-size: 100px;
+    right: 30px;
+}

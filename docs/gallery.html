@@ -5,6 +5,9 @@
     <link rel="icon" type="image/png" sizes="16x16" href="assets/icon16.png">
 
     <link rel="stylesheet" href="style/styles.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 </head>
 <body>
     <div class="content">
@@ -18,15 +21,98 @@
         <div class="page">
             <div class="content-spacer"></div>
             <h1>Screenshot Gallery</h1>
-            <p>This page is under construction.</p>
-            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
-            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
-            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
-            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
-            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
-            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
+            <div id="screenshot-container" class="screenshot-panel"></div>
             <div class="content-spacer"></div>
         </div>
     </div>
     <img src="assets/Galaxis.png" class="background-img">
+
+    <script>
+        $(document).keyup(function(e) {
+            if (e.keyCode == 27) {
+                closeScreenshot();
+            }
+        });
+
+        addScreenshot(1, 'Opening Title');
+        addScreenshot(2, 'Galaxy Map');
+        addScreenshot(3, 'System Map');
+
+        const num_screenshots = 3;
+
+        function addScreenshot(screenshotIndex, screenshotTitle) {
+            var container = document.createElement("div");
+            container.className = 'screenshot';
+            container.onclick = function(_) {openScreenshot(screenshotIndex)};
+            var innerContainer = document.createElement("div");
+            innerContainer.className = "screenshot-inner";
+            var image = document.createElement("img");
+            image.src = 'assets/screenshots/screenshot-' + screenshotIndex + '.jpg';
+            image.className = 'screenshot-img';
+            innerContainer.appendChild(image);
+            var title = document.createElement("div");
+            title.className = 'screenshot-title';
+            title.textContent = screenshotTitle;
+            innerContainer.appendChild(title);
+            container.appendChild(innerContainer);
+            $('#screenshot-container').append(container);
+        }
+
+        function closeScreenshot() {
+            $('#screenshot-overlay').remove();
+            clearTimeout(icon_fade_timer);
+        }
+
+        var icon_fade_timer;
+
+        function openScreenshot(screenshotIndex) {
+            nextIndex = screenshotIndex + 1;
+            if (nextIndex > num_screenshots) nextIndex = 1;
+
+            prevIndex = screenshotIndex - 1;
+            if (prevIndex < 1) prevIndex = num_screenshots;
+
+            closeScreenshot();
+            var overlay = document.createElement("div");
+            overlay.className = 'screenshot-overlay';
+            overlay.id = 'screenshot-overlay';
+            overlay.style.backgroundImage = 'url("assets/screenshots/screenshot-' + screenshotIndex + '.jpg")';
+
+            var btnWrapper = document.createElement("div");
+            btnWrapper.className = 'screenshot-icons';
+            btnWrapper.style.opacity = 1;
+            iconsShown = true;
+            btnWrapper.onmousemove = function(_) {resetIconTimer()};
+            icon_fade_timer = setTimeout(hideIcons, 2000);
+
+            var closeBtn = document.createElement("i");
+            closeBtn.className = 'icon-remove close-btn screenshot-nav-icon';
+            closeBtn.onclick = function(_) {closeScreenshot()};
+
+            var leftArrow = document.createElement("i");
+            leftArrow.className = 'icon-angle-left left-arrow screenshot-nav-icon';
+            leftArrow.onclick = function(_) {openScreenshot(prevIndex)};
+
+            var rightArrow = document.createElement("i");
+            rightArrow.className = 'icon-angle-right right-arrow screenshot-nav-icon';
+            rightArrow.onclick = function(_) {openScreenshot(nextIndex)};
+
+            btnWrapper.appendChild(leftArrow);
+            btnWrapper.appendChild(rightArrow);
+            btnWrapper.appendChild(closeBtn);
+            overlay.appendChild(btnWrapper);
+
+            document.body.appendChild(overlay);
+        }
+
+        function hideIcons() {
+            $('.screenshot-icons')[0].style.opacity = 0;
+        }
+
+        function resetIconTimer() {
+            $('.screenshot-icons')[0].style.opacity = 1;
+            clearTimeout(icon_fade_timer);
+            icon_fade_timer = setTimeout(hideIcons, 700);
+        }
+    </script>
 </body>
