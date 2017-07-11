@@ -34,25 +34,39 @@
             }
         });
 
-        addScreenshot(1, 'Opening Title');
-        addScreenshot(2, 'Galaxy Map');
-        addScreenshot(3, 'System Map');
+        var screenshots = [
+            makeScreenshot('screenshot-1', 'Opening Title'),
+            makeScreenshot('screenshot-2', 'Galaxy Map'),
+            makeScreenshot('screenshot-3', 'System Map'),
+        ];
 
-        const num_screenshots = 3;
+        const num_screenshots = screenshots.length;
 
-        function addScreenshot(screenshotIndex, screenshotTitle) {
+        for (var i = 0; i < num_screenshots; i++) {
+            addScreenshot(i);
+        }
+        
+        function makeScreenshot(src, title) {
+            return {'src': src, 'title': title};
+        }
+
+        function addScreenshot(screenshotIndex) {
             var container = document.createElement("div");
             container.className = 'screenshot';
             container.onclick = function(_) {openScreenshot(screenshotIndex)};
+
             var innerContainer = document.createElement("div");
             innerContainer.className = "screenshot-inner";
+
             var image = document.createElement("img");
-            image.src = 'assets/screenshots/screenshot-' + screenshotIndex + '.jpg';
+            image.src = 'assets/screenshots/' + screenshots[screenshotIndex]['src'] + '.jpg';
             image.className = 'screenshot-img';
-            innerContainer.appendChild(image);
+
             var title = document.createElement("div");
             title.className = 'screenshot-title';
-            title.textContent = screenshotTitle;
+            title.textContent = screenshots[screenshotIndex]['title'];
+
+            innerContainer.appendChild(image);
             innerContainer.appendChild(title);
             container.appendChild(innerContainer);
             $('#screenshot-container').append(container);
@@ -67,16 +81,16 @@
 
         function openScreenshot(screenshotIndex) {
             nextIndex = screenshotIndex + 1;
-            if (nextIndex > num_screenshots) nextIndex = 1;
+            if (nextIndex >= num_screenshots) nextIndex = 0;
 
             prevIndex = screenshotIndex - 1;
-            if (prevIndex < 1) prevIndex = num_screenshots;
+            if (prevIndex < 0) prevIndex = num_screenshots - 1;
 
             closeScreenshot();
             var overlay = document.createElement("div");
             overlay.className = 'screenshot-overlay';
             overlay.id = 'screenshot-overlay';
-            overlay.style.backgroundImage = 'url("assets/screenshots/screenshot-' + screenshotIndex + '.jpg")';
+            overlay.style.backgroundImage = 'url("assets/screenshots/' + screenshots[screenshotIndex]['src'] + '.jpg")';
 
             var btnWrapper = document.createElement("div");
             btnWrapper.className = 'screenshot-icons';
