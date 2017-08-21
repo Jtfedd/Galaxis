@@ -74,6 +74,7 @@ class ShipSelection:
         if len(self.selectedShips) == 0:
             self.uiRoot.hide()
             self.world.toolbar.ctrlBtn.disable()
+            self.world.toolbar.viewBtn.disable()
             self.world.toolbar.moveBtn.disable()
             return
         self.uiRoot.show()
@@ -89,6 +90,7 @@ class ShipSelection:
             self.torpedoBar.show()
             if self.selectedShips[0].size <= 1:
                 self.world.toolbar.ctrlBtn.enable()
+            self.world.toolbar.viewBtn.enable()
             return
 
         self.bg.setPos(Vec3(0.3, 0, -0.075))
@@ -99,6 +101,7 @@ class ShipSelection:
         self.missileBar.hide()
         self.torpedoBar.hide()
         self.world.toolbar.ctrlBtn.disable()
+        self.world.toolbar.viewBtn.disable()
 
         self.update()
 

@@ -37,6 +37,7 @@ class World(DirectObject):
         self.title = Title(self.name)
         self.toolbar = Toolbar(self)
         self.toolbar.ctrlBtn.disable()
+        self.toolbar.viewBtn.disable()
         self.toolbar.moveBtn.disable()
 
         self.grid = loader.loadModel("data/models/grid/grid")
@@ -293,6 +294,7 @@ class World(DirectObject):
         self.active = False
 
     def activateWorld(self):
+        self.deactivateMap()
         self.worldRoot.show()
         
     def addShipNew(self, shipName, quantity = 1):
@@ -486,14 +488,15 @@ class Toolbar:
 
         self.bg = OnscreenImage(image='data/images/black.png',
                                 pos=(0, 0, -.95),
-                                scale=(0.8, 1, 0.05))
+                                scale=(0.85, 1, 0.05))
         self.bg.setTransparency(TransparencyAttrib.MAlpha)
         self.bg.setAlphaScale(0.7)
 
-        self.ctrlBtn = Button(text='Control', pos=(-.65, 0, -.97), scale=0.06, command=None) # TODO
-        self.buildBtn = Button(text='Build', pos=(-0.216666, 0, -.97), scale=0.06, command=self.world.enterBuild)
-        self.moveBtn = Button(text='Move', pos=(.216666, 0, -.97), scale=0.06, command=None) # TODO
-        self.backBtn = Button(text='Back', pos=(.65, 0, -.97), scale=0.06, command=self.backCmd)
+        self.ctrlBtn = Button(text='Control', pos=(-.7, 0, -.97), scale=0.06, command=self.world.activateWorld)
+        self.viewBtn = Button(text='View', pos = (-.35, 0, -.97), scale=0.06, command=None) # TODO
+        self.buildBtn = Button(text='Build', pos=(0, 0, -.97), scale=0.06, command=self.world.enterBuild)
+        self.moveBtn = Button(text='Move', pos=(.35, 0, -.97), scale=0.06, command=None) # TODO
+        self.backBtn = Button(text='Back', pos=(.7, 0, -.97), scale=0.06, command=self.backCmd)
 
         self.hide()
 
@@ -504,6 +507,7 @@ class Toolbar:
     def hide(self):
         self.bg.hide()
         self.ctrlBtn.hide()
+        self.viewBtn.hide()
         self.buildBtn.hide()
         self.moveBtn.hide()
         self.backBtn.hide()
@@ -511,6 +515,7 @@ class Toolbar:
     def show(self):
         self.bg.show()
         self.ctrlBtn.show()
+        self.viewBtn.show()
         self.buildBtn.show()
         self.moveBtn.show()
         self.backBtn.show()
@@ -518,6 +523,7 @@ class Toolbar:
     def destroy(self):
         self.bg.destroy()
         self.ctrlBtn.destroy()
+        self.viewBtn.destroy()
         self.buildBtn.destroy()
         self.moveBtn.destroy()
         self.backBtn.destroy()
