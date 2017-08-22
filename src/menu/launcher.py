@@ -103,7 +103,7 @@ class Launcher(DirectObject):
         self.setFooterMessage(None)
 
     def website(self):
-        webbrowser.open('https://www.panda3d.org/')
+        webbrowser.open('https://jtfedd.github.io/Galaxis/')
 
     def exit(self):
         self.cleanup()
