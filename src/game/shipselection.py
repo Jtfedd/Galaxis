@@ -78,7 +78,8 @@ class ShipSelection:
             self.world.toolbar.moveBtn.disable()
             return
         self.uiRoot.show()
-        self.world.toolbar.moveBtn.enable()
+        if self.selectedShips[0].team == self.world.game.playerTeam:
+            self.world.toolbar.moveBtn.enable()
         if len(self.selectedShips) == 1:
             self.bg.setPos(Vec3(0.3, 0, -0.13))
             self.bg.setScale(Vec3(0.3, 1, 0.13))
@@ -88,7 +89,7 @@ class ShipSelection:
             self.healthBar.show()
             self.missileBar.show()
             self.torpedoBar.show()
-            if self.selectedShips[0].size <= 1:
+            if self.selectedShips[0].size <= 1 and self.selectedShips[0].team == self.world.game.playerTeam:
                 self.world.toolbar.ctrlBtn.enable()
             self.world.toolbar.viewBtn.enable()
             return

@@ -90,6 +90,9 @@ class World(DirectObject):
         self.selectedShips.setZ(0.95)
         self.shouldClearSelection = False
 
+        self.activeShip = None
+        self.activeType = None
+
         self.mapKeys = [0, 0, 0, 0, 0, 0]
 
         self.skybox = Skybox(self.name, self.worldRoot)
@@ -293,9 +296,39 @@ class World(DirectObject):
 
         self.active = False
 
-    def activateWorld(self):
+    def activateWorld(self, type):
+        self.activeType = type
+        self.worldViewActive = True
         self.deactivateMap()
         self.worldRoot.show()
+
+        self.activeShip = self.selectedShips[0]
+        if type == 'control':
+            self.activeShip.setPlayerControl(True)
+        else:
+            self.activeShip.setPlayerViewing(True)
+
+        wp = WindowProperties()
+        wp.setCursorHidden(True)
+        base.win.requestProperties(wp)
+
+        self.accept('escape', self.deactivateWorld)
+
+    def deactivateWorld(self):
+        self.ignoreAll()
+        self.worldViewActive = False
+
+        if self.activeType == 'control':
+            self.activeShip.setPlayerControl(False)
+        else:
+            self.activeShip.setPlayerViewing(False)
+
+        wp = WindowProperties()
+        wp.setCursorHidden(False)
+        base.win.requestProperties(wp)
+
+        self.worldRoot.hide()
+        self.activateMap()
         
     def addShipNew(self, shipName, quantity = 1):
         coords = [5000 * randomSign(), random.randrange(6000)-3000, random.randrange(6000)-3000]
@@ -417,6 +450,7 @@ class World(DirectObject):
 
             self.selectedShips.update()
 
+        if self.worldViewActive:
             self.skybox.update()
 
 class Title:
@@ -492,8 +526,8 @@ class Toolbar:
         self.bg.setTransparency(TransparencyAttrib.MAlpha)
         self.bg.setAlphaScale(0.7)
 
-        self.ctrlBtn = Button(text='Control', pos=(-.7, 0, -.97), scale=0.06, command=self.world.activateWorld)
-        self.viewBtn = Button(text='View', pos = (-.35, 0, -.97), scale=0.06, command=None) # TODO
+        self.ctrlBtn = Button(text='Control', pos=(-.7, 0, -.97), scale=0.06, command=self.world.activateWorld, extraArgs = ['control'])
+        self.viewBtn = Button(text='View', pos = (-.35, 0, -.97), scale=0.06, command=self.world.activateWorld, extraArgs = ['view'])
         self.buildBtn = Button(text='Build', pos=(0, 0, -.97), scale=0.06, command=self.world.enterBuild)
         self.moveBtn = Button(text='Move', pos=(.35, 0, -.97), scale=0.06, command=None) # TODO
         self.backBtn = Button(text='Back', pos=(.7, 0, -.97), scale=0.06, command=self.backCmd)

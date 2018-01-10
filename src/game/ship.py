@@ -1,3 +1,5 @@
+from direct.showbase.DirectObject import DirectObject
+
 from direct.gui.OnscreenImage import OnscreenImage
 from panda3d.core import *
 
@@ -6,12 +8,13 @@ from src.core.showbase import *
 from src.core.util import calcRatio, isOnscreen, map3dToAspect2d
 
 
-class Ship:
+class Ship(DirectObject):
     def __init__(self, world, game, name, pos, lookAtCenter = True):
         self.game = game
         self.world = world
         self.name = name
         self.isNPC = True
+        self.playerView = False
         
         data = ShipData[name]
         
@@ -61,6 +64,8 @@ class Ship:
         self.roll = 0
         self.pitch = 0
         self.yaw = 0
+
+        self.useRoll = False
         
         numLasers = data['numLasers']
         numTurrets = data['numTurrets']
@@ -88,9 +93,30 @@ class Ship:
         self.whoHitMe = None
         
         self.state = ['wander']
-            
+
+    def setPlayerControl(self, hasPlayerControl):
+        self.isNPC = not hasPlayerControl
+
+        if hasPlayerControl:
+            self.model.hide()
+
+            props = base.win.getProperties()
+            base.win.movePointer(0, int(props.getXSize() / 2), int(props.getYSize() / 2))
+
+            self.accept('mouse3', self.setUseRoll, [True])
+            self.accept('mouse3-up', self.setUseRoll, [False])
+        else:
+            self.model.show()
+            self.ignoreAll()
+
+    def setPlayerViewing(self, playerViewing):
+        self.playerView = playerViewing
+
+    def setUseRoll(self, useRoll):
+        self.useRoll = useRoll
+
     def update(self, dt):
-        if self.size == 0:
+        if self.size == 1:
             self.throttle = 1
 
         if self.isNPC:
@@ -105,12 +131,33 @@ class Ship:
 
         self.syncMapModel()
 
+        if not self.isNPC:
+            self.updateCameraPlayer()
+        elif self.playerView:
+            self.updateView()
+
     def AIUpdate(self):
         # TODO AI Logic
         pass
 
     def playerUpdate(self):
-        # TODO Player Control
+        if base.mouseWatcherNode.hasMouse():
+            xPos = base.mouseWatcherNode.getMouse().getX()
+            yPos = base.mouseWatcherNode.getMouse().getY()
+
+            self.pitch = yPos
+            if self.useRoll:
+                self.roll = xPos
+                self.yaw = 0
+            else:
+                self.yaw = -xPos
+                self.roll = 0
+
+    def updateCameraPlayer(self):
+        base.camera.setPos(self.model.getPos(render))
+        base.camera.setHpr(self.model.getHpr(render))
+
+    def updateView(self):
         pass
 
     def syncMapModel(self):
