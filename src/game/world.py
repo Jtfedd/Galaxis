@@ -24,6 +24,8 @@ class World(DirectObject):
         self.ships = []
         self.state = "neutral"
 
+        self.laserbolts = []
+
         self.worldRoot = render.attachNewNode("worldroot")
         self.mapRoot = render.attachNewNode("maproot")
 
@@ -294,6 +296,9 @@ class World(DirectObject):
             if self.ships[i].team != self.ships[0].team:
                 return
 
+        while len(self.laserbolts) > 0:
+            self.laserbolts[0].destroy()
+
         self.active = False
 
     def activateWorld(self, type):
@@ -393,6 +398,9 @@ class World(DirectObject):
     def update(self, dt):
         if not self.active:
             return
+
+        for laser in self.laserbolts:
+            laser.update(dt)
 
         for ship in self.ships:
             ship.update(dt)

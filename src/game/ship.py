@@ -4,6 +4,7 @@ from direct.gui.OnscreenImage import OnscreenImage
 from panda3d.core import *
 
 from shipdata import *
+from ship_components import Laser
 from src.core.showbase import *
 from src.core.util import calcRatio, isOnscreen, map3dToAspect2d
 
@@ -66,6 +67,7 @@ class Ship(DirectObject):
         self.yaw = 0
 
         self.useRoll = False
+        self.fireLasers = False
         
         numLasers = data['numLasers']
         numTurrets = data['numTurrets']
@@ -82,8 +84,8 @@ class Ship(DirectObject):
         self.turbolasers = []
 
         # TODO Make this stuff work
-        # for i in range(numLasers):
-        #     self.lasers.append(Laser(self, self.root.find('**/laser_'+str(i))))
+        for i in range(numLasers):
+            self.lasers.append(Laser(self, self.model.find('**/laser_'+str(i))))
         # for i in range(numTurrets):
         #     self.turrets.append(Turret(self, self.root.find('**/turretbase_'+str(i)), self.root.find('**/turretgun_'+str(i))))
         # for i in range(numTurbolasers):
@@ -96,6 +98,7 @@ class Ship(DirectObject):
 
     def setPlayerControl(self, hasPlayerControl):
         self.isNPC = not hasPlayerControl
+        self.fireLasers = False
 
         if hasPlayerControl:
             self.model.hide()
@@ -105,6 +108,8 @@ class Ship(DirectObject):
 
             self.accept('mouse3', self.setUseRoll, [True])
             self.accept('mouse3-up', self.setUseRoll, [False])
+            self.accept('mouse1', self.setFireLasers, [True])
+            self.accept('mouse1-up', self.setFireLasers, [False])
         else:
             self.model.show()
             self.ignoreAll()
@@ -115,9 +120,15 @@ class Ship(DirectObject):
     def setUseRoll(self, useRoll):
         self.useRoll = useRoll
 
+    def setFireLasers(self, fire):
+        self.fireLasers = fire
+
     def update(self, dt):
         if self.size == 1:
             self.throttle = 1
+
+        for l in self.lasers:
+            l.update(dt)
 
         if self.isNPC:
             self.AIUpdate()
@@ -141,6 +152,10 @@ class Ship(DirectObject):
         pass
 
     def playerUpdate(self):
+        if self.fireLasers:
+            for l in self.lasers:
+                l.fire()
+
         if base.mouseWatcherNode.hasMouse():
             xPos = base.mouseWatcherNode.getMouse().getX()
             yPos = base.mouseWatcherNode.getMouse().getY()
