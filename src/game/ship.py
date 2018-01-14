@@ -7,6 +7,9 @@ from shipdata import *
 from ship_components import Laser
 from src.core.showbase import *
 from src.core.util import calcRatio, isOnscreen, map3dToAspect2d
+from direct.showbase.PythonUtil import fitDestAngle2Src
+
+import random
 
 
 class Ship(DirectObject):
@@ -91,10 +94,13 @@ class Ship(DirectObject):
         # for i in range(numTurbolasers):
         #     self.turbolasers.append(Turbolaser(self, self.root.find('**/turbolaser_'+str(i))))
             
-        self.target = None
+        self.targetShip = None
         self.whoHitMe = None
+
+        self.targetNode = render.attachNewNode('ship_target_node')
+        self.targetNode.setPos(random.randrange(-1000, 1000), random.randrange(-1000, 1000), random.randrange(-1000, 1000))
         
-        self.state = ['wander']
+        self.state = 'wander'
 
     def setPlayerControl(self, hasPlayerControl):
         self.isNPC = not hasPlayerControl
@@ -148,8 +154,26 @@ class Ship(DirectObject):
             self.updateView()
 
     def AIUpdate(self):
-        # TODO AI Logic
-        pass
+        # steer toward target node
+        currHpr = self.model.getHpr()
+        h1 = self.model.getH()
+        p1 = self.model.getP()
+        r1 = self.model.getR()
+        self.model.lookAt(self.targetNode)
+        h2 = self.model.getH()
+        p2 = self.model.getP()
+        r2 = self.model.getR()
+        self.model.setHpr(currHpr)
+        h2 = fitDestAngle2Src(h1, h2)
+        p2 = fitDestAngle2Src(p1, p2)
+        r2 = fitDestAngle2Src(r1, r2)
+
+        h = (h1-h2) / self.turn
+        p = (p2-p1) / self.turn
+        r = (r2-r1) / self.turn
+        self.yaw = min(max(-1, h), 1)
+        self.pitch = min(max(-1, p), 1)
+        self.roll = min(max(-1, r), 1)
 
     def playerUpdate(self):
         if self.fireLasers:
