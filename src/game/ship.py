@@ -98,9 +98,8 @@ class Ship(DirectObject):
         self.whoHitMe = None
 
         self.targetNode = render.attachNewNode('ship_target_node')
-        self.targetNode.setPos(random.randrange(-1000, 1000), random.randrange(-1000, 1000), random.randrange(-1000, 1000))
-        
         self.state = 'wander'
+        self.aiUpdateCounter = 0
 
     def setPlayerControl(self, hasPlayerControl):
         self.isNPC = not hasPlayerControl
@@ -137,7 +136,7 @@ class Ship(DirectObject):
             l.update(dt)
 
         if self.isNPC:
-            self.AIUpdate()
+            self.AIUpdate(dt)
         else:
             self.playerUpdate()
         
@@ -153,7 +152,11 @@ class Ship(DirectObject):
         elif self.playerView:
             self.updateView()
 
-    def AIUpdate(self):
+    def AIUpdate(self, dt):
+        self.aiUpdateCounter -= dt
+        if self.aiUpdateCounter <= 0:
+            self.UpdateAIDecisions()
+
         # steer toward target node
         currHpr = self.model.getHpr()
         h1 = self.model.getH()
@@ -168,12 +171,33 @@ class Ship(DirectObject):
         p2 = fitDestAngle2Src(p1, p2)
         r2 = fitDestAngle2Src(r1, r2)
 
-        h = (h1-h2) / self.turn
+        h = (h2-h1) / self.turn
         p = (p2-p1) / self.turn
         r = (r2-r1) / self.turn
         self.yaw = min(max(-1, h), 1)
         self.pitch = min(max(-1, p), 1)
         self.roll = min(max(-1, r), 1)
+
+        if self.fireLasers:
+            for l in self.lasers:
+                l.fire()
+
+    def UpdateAIDecisions(self):
+        print 'updateDecisions'
+
+        self.aiUpdateCounter = .5+random.random()
+
+        print self.model.getDistance(self.targetNode)
+
+        if self.state == 'wander':
+            if self.size == 2:
+                # Ships of this size don't wander
+                self.targetNode.setPos(0, 0, 0)
+                return
+
+            if self.model.getDistance(self.targetNode) < 1000:
+                self.targetNode.setPos(random.randrange(4000) - 2000, random.randrange(4000) - 2000, random.randrange(4000) - 2000)
+
 
     def playerUpdate(self):
         if self.fireLasers:
