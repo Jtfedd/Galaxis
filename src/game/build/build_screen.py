@@ -32,15 +32,27 @@ class BuildScreen(DirectObject):
         self.footer = BuildScreenFooter(self)
 
         self.elements.append(Button(text="Back", parent=self.root, scale=0.06, pos=(1.65, 0, -.97), align=TextNode.ARight, command=self.deactivate))
+
+        # Horizontal lines
         self.elements.append(OnscreenImage(image="data/images/white.png", parent=self.root, scale=(1.7, 1, 0.002), pos=(0, 0, -0.9)))
         self.elements.append(OnscreenImage(image="data/images/white.png", parent=self.root, scale=(1.7, 1, 0.002), pos=(0, 0, -0.6)))
         self.elements.append(OnscreenImage(image="data/images/white.png", parent=self.root, scale=(1.7, 1, 0.002), pos=(0, 0, 0.65)))
+
+        # Vertical Lines
         self.elements.append(OnscreenImage(image="data/images/white.png", parent=self.root, scale=(0.002, 1, 0.575), pos=(-1.65, 0, 0.025)))
         self.elements.append(OnscreenImage(image="data/images/white.png", parent=self.root, scale=(0.002, 1, 0.575), pos=(-0.6, 0, 0.025)))
         self.elements.append(OnscreenImage(image="data/images/white.png", parent=self.root, scale=(0.002, 1, 0.575), pos=(0.45, 0, 0.025)))
         self.elements.append(OnscreenImage(image="data/images/white.png", parent=self.root, scale=(0.002, 1, 0.03), pos=(1.425, 0, -.95)))
 
         self.shipyardButton = None
+
+        # Ship button placeholders
+        iconSize = 0.25
+        iconPadding = ((3.4/11.0) - iconSize) / 2
+
+        for i in range(11):
+            placement = i*iconSize+i*2*iconPadding - 5*(iconSize+2*iconPadding)
+            self.elements.append(OnscreenImage(image="data/images/white.png", parent=self.root, scale=(iconSize/2, 1, iconSize/2), pos = (placement, 0, -0.75)))
 
         self.active = False
         self.root.hide()
