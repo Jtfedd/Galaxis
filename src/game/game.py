@@ -5,7 +5,7 @@ from direct.filter.CommonFilters import CommonFilters
 from mapviewer import *
 from src.core.filemgr import *
 from src.core.panels import *
-from src.game.build import BuildScreen
+from src.game.build.build_screen import BuildScreen
 from src.game.playercontrol import PlayerControl
 from world import *
 

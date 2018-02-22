@@ -1,6 +1,8 @@
-from controlbase import ControlBase
-from build import BuildItem
 from copy import deepcopy
+
+from controlbase import ControlBase
+from src.game.build.components import BuildItem
+
 
 class PlayerControl(ControlBase):
     def __init__(self, game, team):
