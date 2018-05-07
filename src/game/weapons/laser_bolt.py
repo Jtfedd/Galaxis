@@ -11,7 +11,7 @@ class LaserBolt:
         self.model.setLightOff()
         self.model.setPos(pos)
         self.model.setHpr(hpr)
-        self.model.reparentTo(render)
+        self.model.reparentTo(world.worldRoot)
 
         self.life = 0
         self.speed = 500
